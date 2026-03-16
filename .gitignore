@@ -1,7 +1,10 @@
+# STM32CubeIDE / Eclipse
 .metadata/
 **/Debug/
+**/Release/
+.settings/
 
-# Prerequisites
+# Build / Prerequisites
 *.d
 
 # Object files
@@ -38,6 +41,8 @@
 *.i*86
 *.x86_64
 *.hex
+*.bin
+*.lst
 
 # Debug files
 *.dSYM/
@@ -53,3 +58,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / backup
+*~
+*.swp
+*.swo
