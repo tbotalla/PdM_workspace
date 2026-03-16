@@ -3,6 +3,9 @@
 **/Debug/
 **/Release/
 .settings/
+**/language.settings.xml
+
+.idea/
 
 # Build / Prerequisites
 *.d
