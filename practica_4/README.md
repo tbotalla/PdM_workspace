@@ -1,25 +1,13 @@
-# Práctica 3 — Modularización (retardos no bloqueantes)
+# Práctica 4 — Debounce
 
-## Preguntas de reflexión
+### ¿Es adecuado el control de los parámetros pasados por el usuario que se hace en las funciones implementadas? ¿Se controla que sean valores válidos? ¿Se controla que estén dentro de los rangos correctos?
+Considero que sí. En esta pŕactica casi no hay parámetros de entrada adicionales.
 
-### ¿Es suficientemente clara la consigna 2 o da lugar a implementaciones con distinto comportamiento? 
+### ¿Se nota una mejora en la detección de las pulsaciones respecto a la práctica 0? ¿Se pierden pulsaciones? ¿Hay falsos positivos?
+No logré que se perdieran pulsaciones ni que ocurrieran falsos positivos. El pulsador es bastante sólido al tacto.
 
-La consigna 2 deja algo ambigua la interpretación de los tiempos de encendido y el duty cycle del 50%. Podría interpretarse que los tiempos representan el tiempo que el led tiene que estar encendido, y en consecuencia el que tienen que estar apagado (por ser 50%), o bien que los tiempos de encendido y apagado son el 50% de los valores del array de tiempos, es decir {250, 50, 50, 500}. En mi caso, utilize la primera interpretación.
+### ¿Es adecuada la temporización con la que se llama a debounceFSM_update()? ¿Y a readKey()? ¿Qué pasaría si se llamara con un tiempo mucho más grande? ¿Y mucho más corto?
+Si, se están llamando en cada iteración del while principal tanto `debounceFSM_update` como `readKey`. 
 
----
-### ¿Se puede cambiar el tiempo de encendido del led fácilmente en un solo lugar del código o éste está hardcodeado? ¿Hay números “mágicos” en el código?
-
-Si, solo bastaría editar el arreglo de `TIEMPOS`. No considero que hayan quedado magic numbers en el código.
-
----
-### ¿Qué bibliotecas estándar se debieron agregar a API_delay.h para que el código compile? Si las funcionalidades de una API propia crecieran, habría que pensar cuál sería el mejor lugar para incluir esas bibliotecas y algunos typedefs que se usen en la implementación, ¿Cuál sería el mejor lugar?.
-
-En `API_delay.h` se tuvo que incluir:
-
-- `<stdint.h>`: para tipos `uint32_t`
-- `<stdbool.h>`: para `bool`
-
----
-### ¿Es adecuado el control de los parámetros pasados por el usuario que se hace en las funciones implementadas? ¿Se controla que sean valores válidos? ¿Se controla que estén dentro de los rangos esperados?
-
-Considero que si. En las funciones que reciben un puntero se corrobora que el puntero no sea `NULL`, y en las funciones `delayInit` y `delayWrite` controlo que la duración provista no sea 0 (ya que la variable es de tipo `uint32_t`).
+- Si se llama con un periodo mucho más grande, la máquina de estados podría detectar tarde, o comportarse erráticamente.
+- Si se llama con un período mucho más corto, debería mejorar la resolución (acotada por el CPU).

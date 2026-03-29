@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TIEMPOS_COUNT (sizeof(TIEMPOS) / sizeof(TIEMPOS[0]))
+#define TIMES_COUNT (sizeof(BLINK_TIMES) / sizeof(BLINK_TIMES[0]))
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -44,9 +44,7 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-//const uint32_t DEBOUNCE_TIME = 40;
-const uint32_t BLINK_TIMES[] = { 100, 500};
-static bool_t led_is_on = true;
+static const uint32_t BLINK_TIMES[] = { 100, 500 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,49 +52,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-//debounceState_t state = { };
-void buttonPressed() {
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-}
-void buttonReleased() {
-	HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-}
-
-//void debounceFSM_init() {
-//	state = BUTTON_UP;
-//}
-//void debounceFSM_update() {
-//	bool_t button_down = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET;
-//	switch (state) {
-//	case BUTTON_UP:
-//		if (button_down) {
-//			state = BUTTON_FALLING;
-//		}
-//		break;
-//	case BUTTON_FALLING:
-//		if (button_down) {
-//			state = BUTTON_DOWN;
-//			buttonPressed(); // Emit event
-//		} else {
-//			state = BUTTON_UP;
-//		}
-//		break;
-//	case BUTTON_DOWN:
-//		if (!button_down) {
-//			state = BUTTON_RAISING;
-//		}
-//		break;
-//	case BUTTON_RAISING:
-//		if (button_down) {
-//			state = BUTTON_DOWN;
-//		} else {
-//			state = BUTTON_UP;
-//			buttonReleased(); // Emit event
-//		}
-//		break;
-//	}
-//}
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -134,7 +89,6 @@ int main(void) {
 	delay_t delay = { 0 };
 	uint8_t times_index = 0;
 	delayInit(&delay, BLINK_TIMES[times_index]);
-	//	debounceFSM_init(&state);
 	debounceFSM_init();
 	/* USER CODE END 2 */
 
@@ -142,11 +96,15 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		/* USER CODE END WHILE */
-
 		/* USER CODE BEGIN 3 */
+		debounceFSM_update(); // Each cycle will update the state machine
 		if (delayRead(&delay)) {
-			// Pasaron 40ms
-			debounceFSM_update();
+			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		}
+		if (readKey()) {
+			// Key pressed
+			times_index = (times_index + 1) % TIMES_COUNT;
+			delayWrite(&delay, BLINK_TIMES[times_index]);
 		}
 	}
 	/* USER CODE END 3 */
