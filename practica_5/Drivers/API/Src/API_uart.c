@@ -18,7 +18,7 @@ void uartSendString(uint8_t *pstring) {
 		return;
 	}
 	uint8_t i = 0U;
-	while (pstring[i] != '\0' && i < UART_STR_MAX_LEN) {
+	while (pstring[i] != STR_END_CHAR && i < UART_STR_MAX_LEN) {
 		i++;
 	}
 	if (i == 0U) {
