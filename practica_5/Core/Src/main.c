@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "API_delay.h"
 #include "API_debounce.h"
+#include "API_uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,7 +33,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define TIMES_COUNT (sizeof(BLINK_TIMES) / sizeof(BLINK_TIMES[0]))
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -41,16 +41,13 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-static const uint32_t BLINK_TIMES[] = { 100, 500 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 /* USER CODE END PFP */
 
@@ -84,12 +81,8 @@ int main(void) {
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_USART2_UART_Init();
 	/* USER CODE BEGIN 2 */
-	delay_t delay = { 0 };
-	uint8_t times_index = 0;
-	delayInit(&delay, BLINK_TIMES[times_index]);
-	debounceFSM_init();
+	uartInit();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -97,15 +90,8 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-		debounceFSM_update(); // Each cycle will update the state machine
-		if (delayRead(&delay)) {
-			HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		}
-		if (readKey()) {
-			// Key pressed
-			times_index = (times_index + 1) % TIMES_COUNT;
-			delayWrite(&delay, BLINK_TIMES[times_index]);
-		}
+		uartSendString((uint8_t*)"Hello!\n\r");
+	    HAL_Delay(1000);
 	}
 	/* USER CODE END 3 */
 }
@@ -152,37 +138,6 @@ void SystemClock_Config(void) {
 	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
 		Error_Handler();
 	}
-}
-
-/**
- * @brief USART2 Initialization Function
- * @param None
- * @retval None
- */
-static void MX_USART2_UART_Init(void) {
-
-	/* USER CODE BEGIN USART2_Init 0 */
-
-	/* USER CODE END USART2_Init 0 */
-
-	/* USER CODE BEGIN USART2_Init 1 */
-
-	/* USER CODE END USART2_Init 1 */
-	huart2.Instance = USART2;
-	huart2.Init.BaudRate = 115200;
-	huart2.Init.WordLength = UART_WORDLENGTH_8B;
-	huart2.Init.StopBits = UART_STOPBITS_1;
-	huart2.Init.Parity = UART_PARITY_NONE;
-	huart2.Init.Mode = UART_MODE_TX_RX;
-	huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-	huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-	if (HAL_UART_Init(&huart2) != HAL_OK) {
-		Error_Handler();
-	}
-	/* USER CODE BEGIN USART2_Init 2 */
-
-	/* USER CODE END USART2_Init 2 */
-
 }
 
 /**
