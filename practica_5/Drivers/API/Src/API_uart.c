@@ -24,7 +24,9 @@ void uartSendString(uint8_t *pstring) {
 	if (i == 0U) {
 		return;
 	}
-	(void) HAL_UART_Transmit(&huart2, pstring, i, UART_TIMEOUT_MS);
+	if (HAL_UART_Transmit(&huart2, pstring, i, UART_TIMEOUT_MS) != HAL_OK) {
+		// TODO: propagate error to the caller
+	}
 }
 
 void uartSendStringSize(uint8_t *pstring, uint16_t size) {
@@ -34,7 +36,9 @@ void uartSendStringSize(uint8_t *pstring, uint16_t size) {
 	if (size < UART_SIZE_MIN || size > UART_SIZE_MAX) {
 		return;
 	}
-	(void) HAL_UART_Transmit(&huart2, pstring, size, UART_TIMEOUT_MS);
+	if (HAL_UART_Transmit(&huart2, pstring, size, UART_TIMEOUT_MS) != HAL_OK) {
+		// TODO: propagate error to the caller
+	}
 }
 
 void uartReceiveStringSize(uint8_t *pstring, uint16_t size) {
@@ -44,7 +48,9 @@ void uartReceiveStringSize(uint8_t *pstring, uint16_t size) {
 	if (size < UART_SIZE_MIN || size > UART_SIZE_MAX) {
 		return;
 	}
-	(void) HAL_UART_Receive(&huart2, pstring, size, UART_TIMEOUT_MS);
+	if (HAL_UART_Receive(&huart2, pstring, size, UART_TIMEOUT_MS) != HAL_OK) {
+		// TODO: Propagate error to the caller
+	}
 }
 
 bool_t uartInit(void) {
