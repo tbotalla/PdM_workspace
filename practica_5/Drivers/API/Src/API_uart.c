@@ -53,6 +53,14 @@ void uartReceiveStringSize(uint8_t *pstring, uint16_t size) {
 	}
 }
 
+bool_t uartReceiveByteTry(uint8_t *pstring) {
+	if (pstring == NULL) {
+		return false;
+	}
+
+	return (HAL_UART_Receive(&huart2, pstring, UART_SIZE_MIN, 0U) == HAL_OK) ? true : false;
+}
+
 bool_t uartInit(void) {
 	huart2.Instance = USART2;
 	huart2.Init.BaudRate = 115200;

@@ -11,3 +11,6 @@ La resolución de la práctica 3 se encuentra en el directorio [practica_3](prac
 
 #### Practica 4
 La resolución de la práctica 4 se encuentra en el directorio [practica_4](practica_4). Ver el [README.md](practica_4/README.md) en ese directorio con los detalles de la resolución.
+
+#### Practica 5
+La resolución de la práctica 5 se encuentra en el directorio [practica_5](practica_5). Ver el [README.md](practica_5/README.md) en ese directorio con los detalles de la resolución.

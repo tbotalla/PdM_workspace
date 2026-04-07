@@ -1,13 +1,33 @@
-# Práctica 4 — Debounce
+# Práctica 5 — UART + Command Parser
 
-### ¿Es adecuado el control de los parámetros pasados por el usuario que se hace en las funciones implementadas? ¿Se controla que sean valores válidos? ¿Se controla que estén dentro de los rangos correctos?
-Considero que sí. En esta pŕactica casi no hay parámetros de entrada adicionales.
+### Punto 1
+Se implementó la capa `API_uart` con inicialización de USART2 y funciones básicas de envío/recepción en polling:
 
-### ¿Se nota una mejora en la detección de las pulsaciones respecto a la práctica 0? ¿Se pierden pulsaciones? ¿Hay falsos positivos?
-No logré que se perdieran pulsaciones ni que ocurrieran falsos positivos. El pulsador es bastante sólido al tacto.
+- `uartInit()`
+- `uartSendString()`
+- `uartSendStringSize()`
+- `uartReceiveStringSize()`
 
-### ¿Es adecuada la temporización con la que se llama a debounceFSM_update()? ¿Y a readKey()? ¿Qué pasaría si se llamara con un tiempo mucho más grande? ¿Y mucho más corto?
-Si, se están llamando en cada iteración del while principal tanto `debounceFSM_update` como `readKey`. 
+Además, en la inicialización se imprime un mensaje con la configuración de la UART.
 
-- Si se llama con un periodo mucho más grande, la máquina de estados podría detectar tarde, o comportarse erráticamente.
-- Si se llama con un período mucho más corto, debería mejorar la resolución (acotada por el CPU).
+### Punto 2
+Se implementó `API_cmdparser` con una máquina de estados para recibir comandos por UART:
+
+- Lectura carácter a carácter.
+- Armado de línea hasta `\r` o `\n`.
+- Tokenización y validación básica.
+- Ejecución de comandos obligatorios.
+
+### Comandos obligatorios soportados
+- `HELP`
+- `LED ON`
+- `LED OFF`
+- `LED TOGGLE`
+- `STATUS`
+
+### Manejo de errores
+Se reportan errores simples por UART:
+
+- `ERROR: line too long`
+- `ERROR: unknown command`
+- `ERROR: bad arguments`

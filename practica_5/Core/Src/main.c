@@ -21,9 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "API_delay.h"
-#include "API_debounce.h"
 #include "API_uart.h"
+#include "API_cmdparser.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -83,6 +82,7 @@ int main(void) {
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
 	uartInit();
+	cmdParserInit();
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -90,8 +90,7 @@ int main(void) {
 	while (1) {
 		/* USER CODE END WHILE */
 		/* USER CODE BEGIN 3 */
-		uartSendString((uint8_t*)"Hello!\n\r");
-	    HAL_Delay(1000);
+		cmdPoll();
 	}
 	/* USER CODE END 3 */
 }
