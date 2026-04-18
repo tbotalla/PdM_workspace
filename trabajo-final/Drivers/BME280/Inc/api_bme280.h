@@ -10,7 +10,7 @@
  * @retval true initialization successful
  * @retval false communication/configuration error
  */
-bool_t bme280_init(I2C_HandleTypeDef *hi2c);
+bool_t bme280_init(I2C_HandleTypeDef * hi2c);
 
 /**
  * @brief Read compensated temperature in Celsius.
@@ -18,6 +18,6 @@ bool_t bme280_init(I2C_HandleTypeDef *hi2c);
  * @retval true read successful
  * @retval false read/compensation error
  */
-bool_t bme280_read_temperature(float_t *temp_c);
+bool_t bme280_read_temperature(float_t * temp_c);
 
 #endif /* API_BME280_H */
