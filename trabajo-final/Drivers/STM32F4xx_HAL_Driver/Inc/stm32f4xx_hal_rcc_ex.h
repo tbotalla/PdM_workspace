@@ -42,56 +42,55 @@ extern "C" {
 /**
   * @brief  RCC PLL configuration structure definition
   */
-typedef struct
-{
-  uint32_t PLLState;   /*!< The new state of the PLL.
+typedef struct {
+    uint32_t PLLState; /*!< The new state of the PLL.
                             This parameter can be a value of @ref RCC_PLL_Config                      */
 
-  uint32_t PLLSource;  /*!< RCC_PLLSource: PLL entry clock source.
+    uint32_t PLLSource; /*!< RCC_PLLSource: PLL entry clock source.
                             This parameter must be a value of @ref RCC_PLL_Clock_Source               */
 
-  uint32_t PLLM;       /*!< PLLM: Division factor for PLL VCO input clock.
+    uint32_t PLLM; /*!< PLLM: Division factor for PLL VCO input clock.
                             This parameter must be a number between Min_Data = 0 and Max_Data = 63    */
 
-  uint32_t PLLN;       /*!< PLLN: Multiplication factor for PLL VCO output clock.
+    uint32_t PLLN; /*!< PLLN: Multiplication factor for PLL VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432
                             except for STM32F411xE devices where the Min_Data = 192 */
 
-  uint32_t PLLP;       /*!< PLLP: Division factor for main system clock (SYSCLK).
+    uint32_t PLLP; /*!< PLLP: Division factor for main system clock (SYSCLK).
                             This parameter must be a value of @ref RCC_PLLP_Clock_Divider             */
 
-  uint32_t PLLQ;       /*!< PLLQ: Division factor for OTG FS, SDIO and RNG clocks.
+    uint32_t PLLQ; /*!< PLLQ: Division factor for OTG FS, SDIO and RNG clocks.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15    */
 #if defined(STM32F410Tx) || defined(STM32F410Cx) || defined(STM32F410Rx) || defined(STM32F446xx) || defined(STM32F469xx) ||\
     defined(STM32F479xx) || defined(STM32F412Zx) || defined(STM32F412Vx) || defined(STM32F412Rx) || defined(STM32F412Cx) ||\
     defined(STM32F413xx) || defined(STM32F423xx)
-  uint32_t PLLR;       /*!< PLLR: PLL division factor for I2S, SAI, SYSTEM, SPDIFRX clocks.
+    uint32_t PLLR; /*!< PLLR: PLL division factor for I2S, SAI, SYSTEM, SPDIFRX clocks.
                             This parameter is only available in STM32F410xx/STM32F446xx/STM32F469xx/STM32F479xx
                             and STM32F412Zx/STM32F412Vx/STM32F412Rx/STM32F412Cx/STM32F413xx/STM32F423xx devices.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7     */
 #endif /* STM32F410xx || STM32F446xx || STM32F469xx || STM32F479xx || STM32F412Zx || STM32F412Vx || STM32F412Rx || STM32F412Cx || STM32F413xx || STM32F423xx */
+
 } RCC_PLLInitTypeDef;
 
 #if defined(STM32F446xx)
 /**
   * @brief  PLLI2S Clock structure definition
   */
-typedef struct
-{
-  uint32_t PLLI2SM;    /*!< Specifies division factor for PLL VCO input clock.
+typedef struct {
+    uint32_t PLLI2SM; /*!< Specifies division factor for PLL VCO input clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 63       */
 
-  uint32_t PLLI2SN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+    uint32_t PLLI2SN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432    */
 
-  uint32_t PLLI2SP;    /*!< Specifies division factor for SPDIFRX Clock.
+    uint32_t PLLI2SP; /*!< Specifies division factor for SPDIFRX Clock.
                             This parameter must be a value of @ref RCCEx_PLLI2SP_Clock_Divider           */
 
-  uint32_t PLLI2SQ;    /*!< Specifies the division factor for SAI clock.
+    uint32_t PLLI2SQ; /*!< Specifies the division factor for SAI clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15.
                             This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 
-  uint32_t PLLI2SR;    /*!< Specifies the division factor for I2S clock.
+    uint32_t PLLI2SR; /*!< Specifies the division factor for I2S clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S */
 } RCC_PLLI2SInitTypeDef;
@@ -99,18 +98,17 @@ typedef struct
 /**
   * @brief  PLLSAI Clock structure definition
   */
-typedef struct
-{
-  uint32_t PLLSAIM;    /*!< Specifies division factor for PLL VCO input clock.
+typedef struct {
+    uint32_t PLLSAIM; /*!< Specifies division factor for PLL VCO input clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 63       */
 
-  uint32_t PLLSAIN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+    uint32_t PLLSAIN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432    */
 
-  uint32_t PLLSAIP;    /*!< Specifies division factor for OTG FS, SDIO and RNG clocks.
+    uint32_t PLLSAIP; /*!< Specifies division factor for OTG FS, SDIO and RNG clocks.
                             This parameter must be a value of @ref RCCEx_PLLSAIP_Clock_Divider           */
 
-  uint32_t PLLSAIQ;    /*!< Specifies the division factor for SAI clock.
+    uint32_t PLLSAIQ; /*!< Specifies the division factor for SAI clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15.
                             This parameter will be used only when PLLSAI is selected as Clock Source SAI */
 } RCC_PLLSAIInitTypeDef;
@@ -118,56 +116,55 @@ typedef struct
 /**
   * @brief  RCC extended clocks structure definition
   */
-typedef struct
-{
-  uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
+typedef struct {
+    uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  RCC_PLLI2SInitTypeDef PLLI2S;  /*!< PLL I2S structure parameters.
+    RCC_PLLI2SInitTypeDef PLLI2S; /*!< PLL I2S structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  RCC_PLLSAIInitTypeDef PLLSAI;  /*!< PLL SAI structure parameters.
+    RCC_PLLSAIInitTypeDef PLLSAI; /*!< PLL SAI structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source SAI or LTDC */
 
-  uint32_t PLLI2SDivQ;           /*!< Specifies the PLLI2S division factor for SAI1 clock.
+    uint32_t PLLI2SDivQ; /*!< Specifies the PLLI2S division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 
-  uint32_t PLLSAIDivQ;           /*!< Specifies the PLLI2S division factor for SAI1 clock.
+    uint32_t PLLSAIDivQ; /*!< Specifies the PLLI2S division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLLSAI is selected as Clock Source SAI */
 
-  uint32_t Sai1ClockSelection;    /*!< Specifies SAI1 Clock Source Selection.
+    uint32_t Sai1ClockSelection; /*!< Specifies SAI1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SAI1_Clock_Source */
 
-  uint32_t Sai2ClockSelection;    /*!< Specifies SAI2 Clock Source Selection.
+    uint32_t Sai2ClockSelection; /*!< Specifies SAI2 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SAI2_Clock_Source */
 
-  uint32_t I2sApb1ClockSelection;    /*!< Specifies I2S APB1 Clock Source Selection.
+    uint32_t I2sApb1ClockSelection; /*!< Specifies I2S APB1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_I2SAPB1_Clock_Source */
 
-  uint32_t I2sApb2ClockSelection;    /*!< Specifies I2S APB2 Clock Source Selection.
+    uint32_t I2sApb2ClockSelection; /*!< Specifies I2S APB2 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_I2SAPB2_Clock_Source */
 
-  uint32_t RTCClockSelection;      /*!< Specifies RTC Clock Source Selection.
+    uint32_t RTCClockSelection; /*!< Specifies RTC Clock Source Selection.
                                       This parameter can be a value of @ref RCC_RTC_Clock_Source */
 
-  uint32_t SdioClockSelection;    /*!< Specifies SDIO Clock Source Selection.
+    uint32_t SdioClockSelection; /*!< Specifies SDIO Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SDIO_Clock_Source */
 
-  uint32_t CecClockSelection;      /*!< Specifies CEC Clock Source Selection.
+    uint32_t CecClockSelection; /*!< Specifies CEC Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_CEC_Clock_Source */
 
-  uint32_t Fmpi2c1ClockSelection;  /*!< Specifies FMPI2C1 Clock Source Selection.
+    uint32_t Fmpi2c1ClockSelection; /*!< Specifies FMPI2C1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_FMPI2C1_Clock_Source */
 
-  uint32_t SpdifClockSelection;    /*!< Specifies SPDIFRX Clock Source Selection.
+    uint32_t SpdifClockSelection; /*!< Specifies SPDIFRX Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SPDIFRX_Clock_Source */
 
-  uint32_t Clk48ClockSelection;     /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
+    uint32_t Clk48ClockSelection; /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
                                       This parameter can be a value of @ref RCCEx_CLK48_Clock_Source */
 
-  uint8_t TIMPresSelection;      /*!< Specifies TIM Clock Source Selection.
+    uint8_t TIMPresSelection; /*!< Specifies TIM Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_TIM_PRescaler_Selection */
 } RCC_PeriphCLKInitTypeDef;
 #endif /* STM32F446xx */
@@ -176,24 +173,23 @@ typedef struct
 /**
   * @brief  RCC extended clocks structure definition
   */
-typedef struct
-{
-  uint32_t PeriphClockSelection;   /*!< The Extended Clock to be configured.
+typedef struct {
+    uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  uint32_t I2SClockSelection;      /*!< Specifies RTC Clock Source Selection.
+    uint32_t I2SClockSelection; /*!< Specifies RTC Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_I2S_APB_Clock_Source */
 
-  uint32_t RTCClockSelection;      /*!< Specifies RTC Clock Source Selection.
+    uint32_t RTCClockSelection; /*!< Specifies RTC Clock Source Selection.
                                       This parameter can be a value of @ref RCC_RTC_Clock_Source */
 
-  uint32_t Lptim1ClockSelection;   /*!< Specifies LPTIM1 Clock Source Selection.
+    uint32_t Lptim1ClockSelection; /*!< Specifies LPTIM1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_LPTIM1_Clock_Source */
 
-  uint32_t Fmpi2c1ClockSelection;  /*!< Specifies FMPI2C1 Clock Source Selection.
+    uint32_t Fmpi2c1ClockSelection; /*!< Specifies FMPI2C1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_FMPI2C1_Clock_Source */
 
-  uint8_t TIMPresSelection;        /*!< Specifies TIM Clock Source Selection.
+    uint8_t TIMPresSelection; /*!< Specifies TIM Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_TIM_PRescaler_Selection */
 } RCC_PeriphCLKInitTypeDef;
 #endif /* STM32F410Tx || STM32F410Cx || STM32F410Rx */
@@ -202,19 +198,18 @@ typedef struct
 /**
   * @brief  PLLI2S Clock structure definition
   */
-typedef struct
-{
-  uint32_t PLLI2SM;    /*!< Specifies division factor for PLL VCO input clock.
+typedef struct {
+    uint32_t PLLI2SM; /*!< Specifies division factor for PLL VCO input clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 63       */
 
-  uint32_t PLLI2SN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+    uint32_t PLLI2SN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432    */
 
-  uint32_t PLLI2SQ;    /*!< Specifies the division factor for SAI clock.
+    uint32_t PLLI2SQ; /*!< Specifies the division factor for SAI clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15.
                             This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 
-  uint32_t PLLI2SR;    /*!< Specifies the division factor for I2S clock.
+    uint32_t PLLI2SR; /*!< Specifies the division factor for I2S clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S */
 } RCC_PLLI2SInitTypeDef;
@@ -222,69 +217,68 @@ typedef struct
 /**
   * @brief  RCC extended clocks structure definition
   */
-typedef struct
-{
-  uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
+typedef struct {
+    uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  RCC_PLLI2SInitTypeDef PLLI2S;  /*!< PLL I2S structure parameters.
+    RCC_PLLI2SInitTypeDef PLLI2S; /*!< PLL I2S structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source I2S */
 
 #if defined(STM32F413xx) || defined(STM32F423xx)
-  uint32_t PLLDivR;              /*!< Specifies the PLL division factor for SAI1 clock.
+uint32_t PLLDivR; /*!< Specifies the PLL division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLL is selected as Clock Source SAI */
 
-  uint32_t PLLI2SDivR;           /*!< Specifies the PLLI2S division factor for SAI1 clock.
+uint32_t PLLI2SDivR; /*!< Specifies the PLLI2S division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 #endif /* STM32F413xx || STM32F423xx */
 
-  uint32_t I2sApb1ClockSelection;    /*!< Specifies I2S APB1 Clock Source Selection.
+uint32_t I2sApb1ClockSelection; /*!< Specifies I2S APB1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_I2SAPB1_Clock_Source */
 
-  uint32_t I2sApb2ClockSelection;    /*!< Specifies I2S APB2 Clock Source Selection.
+uint32_t I2sApb2ClockSelection; /*!< Specifies I2S APB2 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_I2SAPB2_Clock_Source */
 
-  uint32_t RTCClockSelection;      /*!< Specifies RTC Clock Source Selection.
+uint32_t RTCClockSelection; /*!< Specifies RTC Clock Source Selection.
                                       This parameter can be a value of @ref RCC_RTC_Clock_Source */
 
-  uint32_t SdioClockSelection;    /*!< Specifies SDIO Clock Source Selection.
+uint32_t SdioClockSelection; /*!< Specifies SDIO Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SDIO_Clock_Source */
 
-  uint32_t Fmpi2c1ClockSelection;  /*!< Specifies FMPI2C1 Clock Source Selection.
+uint32_t Fmpi2c1ClockSelection; /*!< Specifies FMPI2C1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_FMPI2C1_Clock_Source */
 
-  uint32_t Clk48ClockSelection;     /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
+uint32_t Clk48ClockSelection; /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
                                       This parameter can be a value of @ref RCCEx_CLK48_Clock_Source */
 
-  uint32_t Dfsdm1ClockSelection;    /*!< Specifies DFSDM1 Clock Selection.
+uint32_t Dfsdm1ClockSelection; /*!< Specifies DFSDM1 Clock Selection.
                                       This parameter can be a value of @ref RCCEx_DFSDM1_Kernel_Clock_Source */
 
-  uint32_t Dfsdm1AudioClockSelection;/*!< Specifies DFSDM1 Audio Clock Selection.
+uint32_t Dfsdm1AudioClockSelection; /*!< Specifies DFSDM1 Audio Clock Selection.
                                       This parameter can be a value of @ref RCCEx_DFSDM1_Audio_Clock_Source */
 
 #if defined(STM32F413xx) || defined(STM32F423xx)
-  uint32_t Dfsdm2ClockSelection;    /*!< Specifies DFSDM2 Clock Selection.
+uint32_t Dfsdm2ClockSelection; /*!< Specifies DFSDM2 Clock Selection.
                                       This parameter can be a value of @ref RCCEx_DFSDM2_Kernel_Clock_Source */
 
-  uint32_t Dfsdm2AudioClockSelection;/*!< Specifies DFSDM2 Audio Clock Selection.
+uint32_t Dfsdm2AudioClockSelection; /*!< Specifies DFSDM2 Audio Clock Selection.
                                       This parameter can be a value of @ref RCCEx_DFSDM2_Audio_Clock_Source */
 
-  uint32_t Lptim1ClockSelection;   /*!< Specifies LPTIM1 Clock Source Selection.
+uint32_t Lptim1ClockSelection; /*!< Specifies LPTIM1 Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_LPTIM1_Clock_Source */
 
-  uint32_t SaiAClockSelection;     /*!< Specifies SAI1_A Clock Prescalers Selection
+uint32_t SaiAClockSelection; /*!< Specifies SAI1_A Clock Prescalers Selection
                                         This parameter can be a value of @ref RCCEx_SAI1_BlockA_Clock_Source */
 
-  uint32_t SaiBClockSelection;     /*!< Specifies SAI1_B Clock Prescalers Selection
+uint32_t SaiBClockSelection; /*!< Specifies SAI1_B Clock Prescalers Selection
                                         This parameter can be a value of @ref RCCEx_SAI1_BlockB_Clock_Source */
 #endif /* STM32F413xx || STM32F423xx */
 
-  uint32_t PLLI2SSelection;      /*!< Specifies PLL I2S Clock Source Selection.
+uint32_t PLLI2SSelection; /*!< Specifies PLL I2S Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_PLL_I2S_Clock_Source */
 
-  uint8_t TIMPresSelection;      /*!< Specifies TIM Clock Source Selection.
+uint8_t TIMPresSelection; /*!< Specifies TIM Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_TIM_PRescaler_Selection */
 } RCC_PeriphCLKInitTypeDef;
 #endif /* STM32F412Zx || STM32F412Vx || STM32F412Rx || STM32F412Cx || STM32F413xx || STM32F423xx */
@@ -294,17 +288,16 @@ typedef struct
 /**
   * @brief  PLLI2S Clock structure definition
   */
-typedef struct
-{
-  uint32_t PLLI2SN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+typedef struct {
+    uint32_t PLLI2SN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  uint32_t PLLI2SR;    /*!< Specifies the division factor for I2S clock.
+    uint32_t PLLI2SR; /*!< Specifies the division factor for I2S clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  uint32_t PLLI2SQ;    /*!< Specifies the division factor for SAI1 clock.
+    uint32_t PLLI2SQ; /*!< Specifies the division factor for SAI1 clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15.
                             This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 } RCC_PLLI2SInitTypeDef;
@@ -312,22 +305,21 @@ typedef struct
 /**
   * @brief  PLLSAI Clock structure definition
   */
-typedef struct
-{
-  uint32_t PLLSAIN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+typedef struct {
+    uint32_t PLLSAIN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432.
                             This parameter will be used only when PLLSAI is selected as Clock Source SAI or LTDC */
 #if defined(STM32F469xx) || defined(STM32F479xx)
-  uint32_t PLLSAIP;    /*!< Specifies division factor for OTG FS and SDIO clocks.
+uint32_t PLLSAIP; /*!< Specifies division factor for OTG FS and SDIO clocks.
                             This parameter is only available in STM32F469xx/STM32F479xx devices.
                             This parameter must be a value of @ref RCCEx_PLLSAIP_Clock_Divider  */
 #endif /* STM32F469xx || STM32F479xx */
 
-  uint32_t PLLSAIQ;    /*!< Specifies the division factor for SAI1 clock.
+uint32_t PLLSAIQ; /*!< Specifies the division factor for SAI1 clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 15.
                             This parameter will be used only when PLLSAI is selected as Clock Source SAI or LTDC */
 
-  uint32_t PLLSAIR;    /*!< specifies the division factor for LTDC clock
+uint32_t PLLSAIR; /*!< specifies the division factor for LTDC clock
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7.
                             This parameter will be used only when PLLSAI is selected as Clock Source LTDC */
 
@@ -336,38 +328,37 @@ typedef struct
 /**
   * @brief  RCC extended clocks structure definition
   */
-typedef struct
-{
-  uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
+typedef struct {
+    uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  RCC_PLLI2SInitTypeDef PLLI2S;  /*!< PLL I2S structure parameters.
+    RCC_PLLI2SInitTypeDef PLLI2S; /*!< PLL I2S structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  RCC_PLLSAIInitTypeDef PLLSAI;  /*!< PLL SAI structure parameters.
+    RCC_PLLSAIInitTypeDef PLLSAI; /*!< PLL SAI structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source SAI or LTDC */
 
-  uint32_t PLLI2SDivQ;           /*!< Specifies the PLLI2S division factor for SAI1 clock.
+    uint32_t PLLI2SDivQ; /*!< Specifies the PLLI2S division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLLI2S is selected as Clock Source SAI */
 
-  uint32_t PLLSAIDivQ;           /*!< Specifies the PLLI2S division factor for SAI1 clock.
+    uint32_t PLLSAIDivQ; /*!< Specifies the PLLI2S division factor for SAI1 clock.
                                       This parameter must be a number between Min_Data = 1 and Max_Data = 32
                                       This parameter will be used only when PLLSAI is selected as Clock Source SAI */
 
-  uint32_t PLLSAIDivR;           /*!< Specifies the PLLSAI division factor for LTDC clock.
+    uint32_t PLLSAIDivR; /*!< Specifies the PLLSAI division factor for LTDC clock.
                                       This parameter must be one value of @ref RCCEx_PLLSAI_DIVR */
 
-  uint32_t RTCClockSelection;      /*!< Specifies RTC Clock Prescalers Selection.
+    uint32_t RTCClockSelection; /*!< Specifies RTC Clock Prescalers Selection.
                                       This parameter can be a value of @ref RCC_RTC_Clock_Source */
 
-  uint8_t TIMPresSelection;      /*!< Specifies TIM Clock Prescalers Selection.
+    uint8_t TIMPresSelection; /*!< Specifies TIM Clock Prescalers Selection.
                                       This parameter can be a value of @ref RCCEx_TIM_PRescaler_Selection */
 #if defined(STM32F469xx) || defined(STM32F479xx)
-  uint32_t Clk48ClockSelection;  /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
+uint32_t Clk48ClockSelection; /*!< Specifies CLK48 Clock Selection this clock used OTG FS, SDIO and RNG clocks.
                                       This parameter can be a value of @ref RCCEx_CLK48_Clock_Source */
 
-  uint32_t SdioClockSelection;   /*!< Specifies SDIO Clock Source Selection.
+uint32_t SdioClockSelection; /*!< Specifies SDIO Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_SDIO_Clock_Source */
 #endif /* STM32F469xx || STM32F479xx */
 } RCC_PeriphCLKInitTypeDef;
@@ -379,19 +370,19 @@ typedef struct
 /**
   * @brief  PLLI2S Clock structure definition
   */
-typedef struct
-{
+typedef struct {
+
 #if defined(STM32F411xE)
-  uint32_t PLLI2SM;    /*!< PLLM: Division factor for PLLI2S VCO input clock.
+uint32_t PLLI2SM; /*!< PLLM: Division factor for PLLI2S VCO input clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 62  */
 #endif /* STM32F411xE */
 
-  uint32_t PLLI2SN;    /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
+uint32_t PLLI2SN; /*!< Specifies the multiplication factor for PLLI2S VCO output clock.
                             This parameter must be a number between Min_Data = 50 and Max_Data = 432
                             Except for STM32F411xE devices where the Min_Data = 192.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  uint32_t PLLI2SR;    /*!< Specifies the division factor for I2S clock.
+uint32_t PLLI2SR; /*!< Specifies the division factor for I2S clock.
                             This parameter must be a number between Min_Data = 2 and Max_Data = 7.
                             This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
@@ -400,18 +391,17 @@ typedef struct
 /**
   * @brief  RCC extended clocks structure definition
   */
-typedef struct
-{
-  uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
+typedef struct {
+    uint32_t PeriphClockSelection; /*!< The Extended Clock to be configured.
                                       This parameter can be a value of @ref RCCEx_Periph_Clock_Selection */
 
-  RCC_PLLI2SInitTypeDef PLLI2S;  /*!< PLL I2S structure parameters.
+    RCC_PLLI2SInitTypeDef PLLI2S; /*!< PLL I2S structure parameters.
                                       This parameter will be used only when PLLI2S is selected as Clock Source I2S or SAI */
 
-  uint32_t RTCClockSelection;      /*!< Specifies RTC Clock Prescalers Selection.
+    uint32_t RTCClockSelection; /*!< Specifies RTC Clock Prescalers Selection.
                                        This parameter can be a value of @ref RCC_RTC_Clock_Source */
 #if defined(STM32F401xC) || defined(STM32F401xE) || defined(STM32F411xE)
-  uint8_t TIMPresSelection;        /*!< Specifies TIM Clock Source Selection.
+uint8_t TIMPresSelection; /*!< Specifies TIM Clock Source Selection.
                                       This parameter can be a value of @ref RCCEx_TIM_PRescaler_Selection */
 #endif /* STM32F401xC || STM32F401xE || STM32F411xE */
 } RCC_PeriphCLKInitTypeDef;
@@ -5873,6 +5863,7 @@ typedef struct
                    ((((__PLLP__) >> 1U) -1U) << RCC_PLLCFGR_PLLP_Pos)    | \
                    ((__PLLQ__) << RCC_PLLCFGR_PLLQ_Pos)))
 #endif /* STM32F410xx || STM32F446xx || STM32F469xx || STM32F479xx || STM32F412Zx || STM32F412Vx || STM32F412Rx || STM32F412Cx */
+
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------PLLI2S Configuration ---------------------------*/
@@ -6803,8 +6794,8 @@ typedef struct
 /** @addtogroup RCCEx_Exported_Functions_Group1
   *  @{
   */
-HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit);
-void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit);
+HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef * PeriphClkInit);
+void HAL_RCCEx_GetPeriphCLKConfig(RCC_PeriphCLKInitTypeDef * PeriphClkInit);
 
 uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk);
 
@@ -6814,12 +6805,13 @@ uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk);
     defined(STM32F423xx)
 void HAL_RCCEx_SelectLSEMode(uint8_t Mode);
 #endif /* STM32F410xx || STM32F411xE || STM32F446xx || STM32F469xx || STM32F479xx || STM32F412Zx || STM32F412Vx || STM32F412Rx || STM32F412Cx || STM32F413xx || STM32F423xx */
+
 #if defined(RCC_PLLI2S_SUPPORT)
-HAL_StatusTypeDef HAL_RCCEx_EnablePLLI2S(RCC_PLLI2SInitTypeDef  *PLLI2SInit);
+HAL_StatusTypeDef HAL_RCCEx_EnablePLLI2S(RCC_PLLI2SInitTypeDef * PLLI2SInit);
 HAL_StatusTypeDef HAL_RCCEx_DisablePLLI2S(void);
 #endif /* RCC_PLLI2S_SUPPORT */
 #if defined(RCC_PLLSAI_SUPPORT)
-HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI(RCC_PLLSAIInitTypeDef  *PLLSAIInit);
+HAL_StatusTypeDef HAL_RCCEx_EnablePLLSAI(RCC_PLLSAIInitTypeDef * PLLSAIInit);
 HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI(void);
 #endif /* RCC_PLLSAI_SUPPORT */
 /**
@@ -6992,6 +6984,7 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI(void);
 #define IS_RCC_LSE_MODE(MODE)           (((MODE) == RCC_LSE_LOWPOWER_MODE) ||\
                                          ((MODE) == RCC_LSE_HIGHDRIVE_MODE))
 #endif /* STM32F411xE || STM32F446xx || STM32F412Zx || STM32F412Vx || STM32F412Rx || STM32F412Cx || STM32F413xx || STM32F423xx  */
+
 
 #if defined(STM32F410Tx) || defined(STM32F410Cx) || defined(STM32F410Rx)
 #define IS_RCC_PLLR_VALUE(VALUE) ((2U <= (VALUE)) && ((VALUE) <= 7U))
@@ -7187,4 +7180,3 @@ HAL_StatusTypeDef HAL_RCCEx_DisablePLLSAI(void);
 #endif
 
 #endif /* __STM32F4xx_HAL_RCC_EX_H */
-

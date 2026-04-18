@@ -41,32 +41,29 @@ extern "C" {
 /** @defgroup EXTI_Exported_Types EXTI Exported Types
   * @{
   */
-typedef enum
-{
-  HAL_EXTI_COMMON_CB_ID          = 0x00U
+typedef enum {
+    HAL_EXTI_COMMON_CB_ID = 0x00U
 } EXTI_CallbackIDTypeDef;
 
 /**
   * @brief  EXTI Handle structure definition
   */
-typedef struct
-{
-  uint32_t Line;                    /*!<  Exti line number */
-  void (* PendingCallback)(void);   /*!<  Exti pending callback */
+typedef struct {
+    uint32_t Line; /*!<  Exti line number */
+    void (*PendingCallback)(void); /*!<  Exti pending callback */
 } EXTI_HandleTypeDef;
 
 /**
   * @brief  EXTI Configuration structure definition
   */
-typedef struct
-{
-  uint32_t Line;      /*!< The Exti line to be configured. This parameter
+typedef struct {
+    uint32_t Line; /*!< The Exti line to be configured. This parameter
                            can be a value of @ref EXTI_Line */
-  uint32_t Mode;      /*!< The Exit Mode to be configured for a core.
+    uint32_t Mode; /*!< The Exit Mode to be configured for a core.
                            This parameter can be a combination of @ref EXTI_Mode */
-  uint32_t Trigger;   /*!< The Exti Trigger to be configured. This parameter
+    uint32_t Trigger; /*!< The Exti Trigger to be configured. This parameter
                            can be a value of @ref EXTI_Trigger */
-  uint32_t GPIOSel;   /*!< The Exti GPIO multiplexer selection to be configured.
+    uint32_t GPIOSel; /*!< The Exti GPIO multiplexer selection to be configured.
                            This parameter is only possible for line 0 to 15. It
                            can be a value of @ref EXTI_GPIOSel */
 } EXTI_ConfigTypeDef;
@@ -100,26 +97,34 @@ typedef struct
 #define EXTI_LINE_14                       (EXTI_GPIO       | 0x0Eu)    /*!< External interrupt line 14 */
 #define EXTI_LINE_15                       (EXTI_GPIO       | 0x0Fu)    /*!< External interrupt line 15 */
 #define EXTI_LINE_16                       (EXTI_CONFIG     | 0x10u)    /*!< External interrupt line 16 Connected to the PVD Output */
+
 #define EXTI_LINE_17                       (EXTI_CONFIG     | 0x11u)    /*!< External interrupt line 17 Connected to the RTC Alarm event */
+
 #if defined(EXTI_IMR_IM18)
 #define EXTI_LINE_18                       (EXTI_CONFIG     | 0x12u)    /*!< External interrupt line 18 Connected to the USB OTG FS Wakeup from suspend event */
+
 #else
 #define EXTI_LINE_18                       (EXTI_RESERVED   | 0x12u)    /*!< No interrupt supported in this line */
 #endif /* EXTI_IMR_IM18 */
 #if defined(EXTI_IMR_IM19)
 #define EXTI_LINE_19                       (EXTI_CONFIG     | 0x13u)    /*!< External interrupt line 19 Connected to the Ethernet Wakeup event */
+
 #else
 #define EXTI_LINE_19                       (EXTI_RESERVED   | 0x13u)    /*!< No interrupt supported in this line */
 #endif /* EXTI_IMR_IM19 */
 #if defined(EXTI_IMR_IM20)
 #define EXTI_LINE_20                       (EXTI_CONFIG     | 0x14u)    /*!< External interrupt line 20 Connected to the USB OTG HS (configured in FS) Wakeup event  */
+
 #else
 #define EXTI_LINE_20                       (EXTI_RESERVED   | 0x14u)    /*!< No interrupt supported in this line */
 #endif /* EXTI_IMR_IM20 */
 #define EXTI_LINE_21                       (EXTI_CONFIG     | 0x15u)    /*!< External interrupt line 21 Connected to the RTC Tamper and Time Stamp events */
+
 #define EXTI_LINE_22                       (EXTI_CONFIG     | 0x16u)    /*!< External interrupt line 22 Connected to the RTC Wakeup event */
+
 #if defined(EXTI_IMR_IM23)
 #define EXTI_LINE_23                       (EXTI_CONFIG     | 0x17u)    /*!< External interrupt line 23 Connected to the LPTIM1 asynchronous event */
+
 #endif /* EXTI_IMR_IM23 */
 
 /**
@@ -324,10 +329,16 @@ typedef struct
   */
 /* Configuration functions ****************************************************/
 HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+
 HAL_StatusTypeDef HAL_EXTI_GetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig);
+
 HAL_StatusTypeDef HAL_EXTI_ClearConfigLine(EXTI_HandleTypeDef *hexti);
-HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void));
+
+HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID,
+                                            void (*pPendingCbfn)(void));
+
 HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLine);
+
 /**
   * @}
   */
@@ -338,8 +349,11 @@ HAL_StatusTypeDef HAL_EXTI_GetHandle(EXTI_HandleTypeDef *hexti, uint32_t ExtiLin
   */
 /* IO operation functions *****************************************************/
 void HAL_EXTI_IRQHandler(EXTI_HandleTypeDef *hexti);
+
 uint32_t HAL_EXTI_GetPending(EXTI_HandleTypeDef *hexti, uint32_t Edge);
+
 void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti, uint32_t Edge);
+
 void HAL_EXTI_GenerateSWI(EXTI_HandleTypeDef *hexti);
 
 /**
@@ -363,4 +377,3 @@ void HAL_EXTI_GenerateSWI(EXTI_HandleTypeDef *hexti);
 #endif
 
 #endif /* STM32f4xx_HAL_EXTI_H */
-

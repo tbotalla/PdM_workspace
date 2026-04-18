@@ -46,49 +46,46 @@ extern "C" {
 /**
   * @brief  RCC Internal/External Oscillator (HSE, HSI, LSE and LSI) configuration structure definition
   */
-typedef struct
-{
-  uint32_t OscillatorType;       /*!< The oscillators to be configured.
+typedef struct {
+    uint32_t OscillatorType; /*!< The oscillators to be configured.
                                       This parameter can be a value of @ref RCC_Oscillator_Type                   */
 
-  uint32_t HSEState;             /*!< The new state of the HSE.
+    uint32_t HSEState; /*!< The new state of the HSE.
                                       This parameter can be a value of @ref RCC_HSE_Config                        */
 
-  uint32_t LSEState;             /*!< The new state of the LSE.
+    uint32_t LSEState; /*!< The new state of the LSE.
                                       This parameter can be a value of @ref RCC_LSE_Config                        */
 
-  uint32_t HSIState;             /*!< The new state of the HSI.
+    uint32_t HSIState; /*!< The new state of the HSI.
                                       This parameter can be a value of @ref RCC_HSI_Config                        */
 
-  uint32_t HSICalibrationValue;  /*!< The HSI calibration trimming value (default is RCC_HSICALIBRATION_DEFAULT).
+    uint32_t HSICalibrationValue; /*!< The HSI calibration trimming value (default is RCC_HSICALIBRATION_DEFAULT).
                                        This parameter must be a number between Min_Data = 0x00 and Max_Data = 0x1F */
 
-  uint32_t LSIState;             /*!< The new state of the LSI.
+    uint32_t LSIState; /*!< The new state of the LSI.
                                       This parameter can be a value of @ref RCC_LSI_Config                        */
 
-  RCC_PLLInitTypeDef PLL;        /*!< PLL structure parameters                                                    */
+    RCC_PLLInitTypeDef PLL; /*!< PLL structure parameters                                                    */
 } RCC_OscInitTypeDef;
 
 /**
   * @brief  RCC System, AHB and APB busses clock configuration structure definition
   */
-typedef struct
-{
-  uint32_t ClockType;             /*!< The clock to be configured.
+typedef struct {
+    uint32_t ClockType; /*!< The clock to be configured.
                                        This parameter can be a value of @ref RCC_System_Clock_Type      */
 
-  uint32_t SYSCLKSource;          /*!< The clock source (SYSCLKS) used as system clock.
+    uint32_t SYSCLKSource; /*!< The clock source (SYSCLKS) used as system clock.
                                        This parameter can be a value of @ref RCC_System_Clock_Source    */
 
-  uint32_t AHBCLKDivider;         /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
+    uint32_t AHBCLKDivider; /*!< The AHB clock (HCLK) divider. This clock is derived from the system clock (SYSCLK).
                                        This parameter can be a value of @ref RCC_AHB_Clock_Source       */
 
-  uint32_t APB1CLKDivider;        /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB1CLKDivider; /*!< The APB1 clock (PCLK1) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB1_APB2_Clock_Source */
 
-  uint32_t APB2CLKDivider;        /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
+    uint32_t APB2CLKDivider; /*!< The APB2 clock (PCLK2) divider. This clock is derived from the AHB clock (HCLK).
                                        This parameter can be a value of @ref RCC_APB1_APB2_Clock_Source */
-
 } RCC_ClkInitTypeDef;
 
 /**
@@ -215,6 +212,7 @@ typedef struct
 #define RCC_SYSCLKSOURCE_STATUS_HSE     RCC_CFGR_SWS_HSE   /*!< HSE used as system clock */
 #define RCC_SYSCLKSOURCE_STATUS_PLLCLK  RCC_CFGR_SWS_PLL   /*!< PLL used as system clock */
 #define RCC_SYSCLKSOURCE_STATUS_PLLRCLK ((uint32_t)(RCC_CFGR_SWS_0 | RCC_CFGR_SWS_1))   /*!< PLLR used as system clock */
+
 /**
   * @}
   */
@@ -1242,8 +1240,11 @@ typedef struct
   */
 /* Initialization and de-initialization functions  ******************************/
 HAL_StatusTypeDef HAL_RCC_DeInit(void);
+
 HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct);
+
 HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency);
+
 /**
   * @}
   */
@@ -1252,15 +1253,23 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruc
   * @{
   */
 /* Peripheral Control functions  ************************************************/
-void     HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
-void     HAL_RCC_EnableCSS(void);
-void     HAL_RCC_DisableCSS(void);
+void HAL_RCC_MCOConfig(uint32_t RCC_MCOx, uint32_t RCC_MCOSource, uint32_t RCC_MCODiv);
+
+void HAL_RCC_EnableCSS(void);
+
+void HAL_RCC_DisableCSS(void);
+
 uint32_t HAL_RCC_GetSysClockFreq(void);
+
 uint32_t HAL_RCC_GetHCLKFreq(void);
+
 uint32_t HAL_RCC_GetPCLK1Freq(void);
+
 uint32_t HAL_RCC_GetPCLK2Freq(void);
-void     HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct);
-void     HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t *pFLatency);
+
+void HAL_RCC_GetOscConfig(RCC_OscInitTypeDef *RCC_OscInitStruct);
+
+void HAL_RCC_GetClockConfig(RCC_ClkInitTypeDef * RCC_ClkInitStruct, uint32_t * pFLatency);
 
 /* CSS NMI IRQ handler */
 void HAL_RCC_NMI_IRQHandler(void);
@@ -1455,4 +1464,3 @@ void HAL_RCC_CSSCallback(void);
 #endif
 
 #endif /* __STM32F4xx_HAL_RCC_H */
-

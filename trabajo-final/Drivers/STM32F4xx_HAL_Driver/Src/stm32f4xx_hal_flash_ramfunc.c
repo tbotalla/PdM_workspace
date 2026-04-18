@@ -91,14 +91,13 @@
   *        It should be done with specific routine executed from RAM.
   * @retval HAL status
   */
-__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StopFlashInterfaceClk(void)
-{
-  /* Enable Power ctrl clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  /* Stop the flash interface while System Run */
-  SET_BIT(PWR->CR, PWR_CR_FISSR);
+__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StopFlashInterfaceClk(void) {
+    /* Enable Power ctrl clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    /* Stop the flash interface while System Run */
+    SET_BIT(PWR->CR, PWR_CR_FISSR);
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -108,14 +107,13 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StopFlashInterfaceClk(void)
   *        It should be done with specific routine executed from RAM.
   * @retval HAL status
   */
-__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StartFlashInterfaceClk(void)
-{
-  /* Enable Power ctrl clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  /* Start the flash interface while System Run */
-  CLEAR_BIT(PWR->CR, PWR_CR_FISSR);
+__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StartFlashInterfaceClk(void) {
+    /* Enable Power ctrl clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    /* Start the flash interface while System Run */
+    CLEAR_BIT(PWR->CR, PWR_CR_FISSR);
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -125,14 +123,13 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_StartFlashInterfaceClk(void)
   *        It should be done with specific routine executed from RAM.
   * @retval HAL status
   */
-__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_EnableFlashSleepMode(void)
-{
-  /* Enable Power ctrl clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  /* Enable the flash sleep while System Run */
-  SET_BIT(PWR->CR, PWR_CR_FMSSR);
+__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_EnableFlashSleepMode(void) {
+    /* Enable Power ctrl clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    /* Enable the flash sleep while System Run */
+    SET_BIT(PWR->CR, PWR_CR_FMSSR);
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -142,14 +139,13 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_EnableFlashSleepMode(void)
   *        It should be done with specific routine executed from RAM.
   * @retval HAL status
   */
-__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_DisableFlashSleepMode(void)
-{
-  /* Enable Power ctrl clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  /* Disable the flash sleep while System Run */
-  CLEAR_BIT(PWR->CR, PWR_CR_FMSSR);
+__RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_DisableFlashSleepMode(void) {
+    /* Enable Power ctrl clock */
+    __HAL_RCC_PWR_CLK_ENABLE();
+    /* Disable the flash sleep while System Run */
+    CLEAR_BIT(PWR->CR, PWR_CR_FMSSR);
 
-  return HAL_OK;
+    return HAL_OK;
 }
 
 /**
@@ -169,4 +165,3 @@ __RAM_FUNC HAL_StatusTypeDef HAL_FLASHEx_DisableFlashSleepMode(void)
 /**
   * @}
   */
-
