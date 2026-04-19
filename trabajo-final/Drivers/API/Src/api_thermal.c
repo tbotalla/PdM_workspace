@@ -6,7 +6,7 @@
 #include "stm32f4xx_hal.h"
 
 static thermal_state_t thermal_state = thermal_state_init;
-static float_t threshold_c = 30.0f;
+static float_t threshold_c = 25.0f;
 static float_t hysteresis_c = 1.0f;
 static float_t last_temp_c = 0.0f;
 static uint32_t max_alarm_ms = 10000U;
@@ -15,8 +15,8 @@ static uint32_t alarm_start_ms = 0U;
 static uint32_t last_recovery_try_ms = 0U;
 static I2C_HandleTypeDef *thermal_i2c = NULL;
 
-#define THERMAL_SAMPLE_PERIOD_MS 500U
-#define THERMAL_RECOVERY_PERIOD_MS 1000U
+#define THERMAL_SAMPLE_PERIOD_MS 500U // How often to sample the temperature
+#define THERMAL_RECOVERY_PERIOD_MS 1000U // ms to wait for recovery after sensor error
 #define THRESHOLD_MIN_C (-40.0f)
 #define THRESHOLD_MAX_C (85.0f)
 #define HYSTERESIS_MIN_C (0.1f)
@@ -54,7 +54,7 @@ void thermal_fsm_init(I2C_HandleTypeDef *hi2c) {
     thermal_i2c = hi2c;
 
     // Default initial values
-    threshold_c = 30.0f;
+    threshold_c = 25.0f;
     hysteresis_c = 1.0f;
     max_alarm_ms = 10000U;
     last_temp_c = 0.0f;

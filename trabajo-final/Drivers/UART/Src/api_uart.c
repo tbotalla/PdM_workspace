@@ -15,7 +15,7 @@
 #define UART_SIZE_MAX 256U // Maximum accepted size for sized send/receive functions
 #define STR_END_CHAR '\0' // End of string null terminator
 #define CLI_LINE_MAX 96U // Max bytes in the CLI input line buffer (including '\0')
-#define CLI_REPORT_PERIOD_MS 3000U // Interval between automatic status reports over UART
+#define CLI_REPORT_PERIOD_MS 5000U // Interval between automatic status reports over UART
 #define CLI_DELIMITERS " \t" // Token delimiters for command parsing (space and tab)
 
 // Buffer that accumulates incoming bytes until a full line is received
@@ -324,7 +324,8 @@ void uart_cli_poll() {
     uint8_t byte = 0U;
     while (uart_receive_byte_try(&byte)) {
         // Echo received character back so we can see what we type
-        uart_send_string_size(&byte, 1U);
+        // Uncomment in case is needed
+        // uart_send_string_size(&byte, 1U);
 
         if ((byte == '\r') || (byte == '\n')) {
             if (cli_index > 0U) {
