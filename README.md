@@ -14,3 +14,6 @@ La resolución de la práctica 4 se encuentra en el directorio [practica_4](prac
 
 #### Practica 5
 La resolución de la práctica 5 se encuentra en el directorio [practica_5](practica_5). Ver el [README.md](practica_5/README.md) en ese directorio con los detalles de la resolución.
+
+#### TP Final
+La resolución del trabajo práctico final se encuentra en el directorio [trabajo-final](trabajo-final). Ver el [README.md](trabajo-final/README.md) en ese directorio con los detalles de la resolución.
