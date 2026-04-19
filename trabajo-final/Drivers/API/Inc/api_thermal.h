@@ -14,7 +14,7 @@ typedef enum {
 } thermal_state_t;
 
 /**
- * @brief Initialize thermal FSM, BME280 sensor and buzzer
+ * @brief Reset parameters, init buzzer and I2C handle. FSM stays in thermal_state_init until the first thermal_fsm_update.
  * @param hi2c pointer to I2C handle for sensor communication
  */
 void thermal_fsm_init(I2C_HandleTypeDef * hi2c);
