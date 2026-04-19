@@ -1,7 +1,6 @@
 #ifndef API_THERMAL_H
 #define API_THERMAL_H
 
-#include <stdint.h>
 #include "stm32f4xx_hal.h"
 #include "types.h"
 
@@ -21,8 +20,9 @@ void thermal_fsm_init(I2C_HandleTypeDef * hi2c);
 
 /**
  * @brief Run one cycle of the thermal FSM (call this one periodically from main loop).
+ * @param now_ms time in milliseconds (in this case HAL_GetTick() from the caller).
  */
-void thermal_fsm_update();
+void thermal_fsm_update(uint32_t now_ms);
 
 /**
  * @brief Set temperature threshold for alarm activation

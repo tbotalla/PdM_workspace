@@ -2,6 +2,10 @@
 #define __TYPES_H
 
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef bool bool_t;
 typedef char char_t;

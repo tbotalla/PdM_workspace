@@ -1,9 +1,6 @@
 #include "api_uart.h"
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "types.h"
 
 #include "main.h"
 #include "stm32f4xx_hal.h"
@@ -15,7 +12,7 @@
 #define UART_SIZE_MAX 256U // Maximum accepted size for sized send/receive functions
 #define STR_END_CHAR '\0' // End of string null terminator
 #define CLI_LINE_MAX 96U // Max bytes in the CLI input line buffer (including '\0')
-#define CLI_REPORT_PERIOD_MS 5000U // Interval between automatic status reports over UART
+#define CLI_REPORT_PERIOD_MS 3000U // Interval between automatic status reports over UART
 #define CLI_DELIMITERS " \t" // Token delimiters for command parsing (space and tab)
 
 // Buffer that accumulates incoming bytes until a full line is received
@@ -24,6 +21,8 @@ static uint8_t cli_line[CLI_LINE_MAX];
 static uint16_t cli_index = 0U;
 // Timestamp of the last periodic status report sent over UART
 static uint32_t cli_last_report_ms = 0U;
+// When false, periodic TEMP/STATE lines are not sent
+static bool_t cli_report_enabled = true;
 // Pointer to the UART peripheral handle provided by the caller at init
 static UART_HandleTypeDef *uart_huart = NULL;
 // Counts HAL UART transmit/receive errors since init
@@ -72,6 +71,7 @@ static void uart_send_cmd_help() {
     uart_send_string((uint8_t *) "  SET HYST <value_c>\r\n");
     uart_send_string((uint8_t *) "  SET ALARM_TIMEOUT <value_ms>\r\n");
     uart_send_string((uint8_t *) "  GET TMP_MAX|HYST|ALARM_TIMEOUT|STATE|TEMP\r\n");
+    uart_send_string((uint8_t *) "  REPORT ON|OFF\r\n");
 }
 
 /* Prints current temperature report */
@@ -117,6 +117,27 @@ static void process_cli_command(char_t *line) {
 
     if (strcmp(cmd, "STATUS") == 0) {
         uart_send_cmd_status();
+        return;
+    }
+
+    if (strcmp(cmd, "REPORT") == 0) {
+        if (arg1 == NULL) {
+            uart_send_string((uint8_t *) "ERROR: use REPORT ON or REPORT OFF\r\n");
+            return;
+        }
+        if (strcmp(arg1, "ON") == 0) {
+            cli_report_enabled = true;
+            cli_last_report_ms = HAL_GetTick();
+            uart_send_string((uint8_t *) "OK REPORT ON\r\n");
+            uart_send_cmd_temp_report();
+            return;
+        }
+        if (strcmp(arg1, "OFF") == 0) {
+            cli_report_enabled = false;
+            uart_send_string((uint8_t *) "OK REPORT OFF\r\n");
+            return;
+        }
+        uart_send_string((uint8_t *) "ERROR: use REPORT ON or REPORT OFF\r\n");
         return;
     }
 
@@ -316,9 +337,10 @@ bool_t uart_init(UART_HandleTypeDef *huart) {
 
 void uart_cli_poll() {
     uint32_t now_ms = HAL_GetTick();
-    if ((now_ms - cli_last_report_ms) >= CLI_REPORT_PERIOD_MS) {
+    if (cli_report_enabled && now_ms - cli_last_report_ms >= CLI_REPORT_PERIOD_MS) {
+        // Print current temperature report
         cli_last_report_ms = now_ms;
-        uart_send_cmd_temp_report(); // Print current temperature report
+        uart_send_cmd_temp_report();
     }
 
     uint8_t byte = 0U;

@@ -108,7 +108,7 @@ int main(void) {
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-        thermal_fsm_update();
+        thermal_fsm_update(HAL_GetTick());
         uart_cli_poll();
     }
     /* USER CODE END 3 */

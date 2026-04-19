@@ -3,8 +3,6 @@
 #include "api_bme280.h"
 #include "api_buzzer.h"
 
-#include "stm32f4xx_hal.h"
-
 static thermal_state_t thermal_state = thermal_state_init;
 static float_t threshold_c = 25.0f;
 static float_t hysteresis_c = 1.0f;
@@ -70,15 +68,12 @@ void thermal_fsm_init(I2C_HandleTypeDef *hi2c) {
     thermal_state = thermal_state_init;
 }
 
-void thermal_fsm_update(void) {
-    uint32_t now_ms = HAL_GetTick();
+void thermal_fsm_update(uint32_t now_ms) {
     float_t alarm_off_c = threshold_c - hysteresis_c;
-    if (thermal_state == thermal_state_alarm_on) {
-        if (now_ms - alarm_start_ms >= max_alarm_ms) {
-            // Max alarm time exceeded, transition to thermal_state_alarm_timeout
-            buzzer_off();
-            thermal_state = thermal_state_alarm_timeout;
-        }
+    if (thermal_state == thermal_state_alarm_on && now_ms - alarm_start_ms >= max_alarm_ms) {
+        // Max alarm time exceeded, transition to thermal_state_alarm_timeout
+        buzzer_off();
+        thermal_state = thermal_state_alarm_timeout;
     }
 
     float_t temp_c = 0.0f;

@@ -54,7 +54,7 @@ uint32_t uart_get_error_count();
 bool_t uart_receive_byte_try(uint8_t * pstring);
 
 /**
- * @brief Poll CLI: print periodic status and process incoming commands
+ * @brief Poll CLI: optional periodic TEMP report (REPORT ON) and process commands
  */
 void uart_cli_poll();
 
