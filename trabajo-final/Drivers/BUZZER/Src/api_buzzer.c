@@ -1,4 +1,4 @@
-#include "../Inc/api_buzzer.h"
+#include "api_buzzer.h"
 
 #include "stm32f4xx_hal.h"
 

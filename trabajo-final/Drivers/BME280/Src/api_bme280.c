@@ -1,4 +1,4 @@
-#include "../Inc/api_bme280.h"
+#include "api_bme280.h"
 
 #include "stm32f4xx_hal.h"
 

@@ -7,7 +7,7 @@
 
 #include "main.h"
 #include "stm32f4xx_hal.h"
-#include "../../API/Inc/api_thermal.h"
+#include "api_thermal.h"
 
 #define UART_TIMEOUT_MS 1000U // Max blocking time (in ms) for HAL UART transmit/receive
 #define UART_STR_MAX_LEN 256U // Max length scanned by uart_send_string before giving up

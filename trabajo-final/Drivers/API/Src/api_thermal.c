@@ -1,7 +1,7 @@
-#include "../Inc/api_thermal.h"
+#include "api_thermal.h"
 
-#include "../../BME280/Inc/api_bme280.h"
-#include "../../BUZZER/Inc/api_buzzer.h"
+#include "api_bme280.h"
+#include "api_buzzer.h"
 
 #include "stm32f4xx_hal.h"
 
