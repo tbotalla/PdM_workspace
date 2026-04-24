@@ -3,7 +3,7 @@
 #include "types.h"
 
 #include "main.h"
-#include "stm32f4xx_hal.h"
+#include "driver.h"
 #include "api_thermal.h"
 
 #define UART_TIMEOUT_MS 1000U // Max blocking time (in ms) for HAL UART transmit/receive
@@ -23,8 +23,8 @@ static uint16_t cli_index = 0U;
 static uint32_t cli_last_report_ms = 0U;
 // When false, periodic TEMP/STATE lines are not sent
 static bool_t cli_report_enabled = true;
-// Pointer to the UART peripheral handle provided by the caller at init
-static UART_HandleTypeDef *uart_huart = NULL;
+// Opaque handle to the UART peripheral (HAL struct) from the caller
+static void *uart_huart = NULL;
 // Counts HAL UART transmit/receive errors since init
 static uint32_t uart_error_count = 0U;
 
@@ -75,7 +75,7 @@ static void uart_send_cmd_help() {
 }
 
 /* Prints current temperature report */
-static void uart_send_cmd_temp_report(void) {
+static void uart_send_cmd_temp_report() {
     long_t temp_int = 0;
     long_t temp_dec = 0;
     char_t report[96];
@@ -91,7 +91,7 @@ static void uart_cli_init() {
     for (uint16_t i = 0U; i < CLI_LINE_MAX; i++) {
         cli_line[i] = 0U;
     }
-    cli_last_report_ms = HAL_GetTick();
+    cli_last_report_ms = driver_get_tick_ms();
 }
 
 static void process_cli_command(char_t *line) {
@@ -127,7 +127,7 @@ static void process_cli_command(char_t *line) {
         }
         if (strcmp(arg1, "ON") == 0) {
             cli_report_enabled = true;
-            cli_last_report_ms = HAL_GetTick();
+            cli_last_report_ms = driver_get_tick_ms();
             uart_send_string((uint8_t *) "OK REPORT ON\r\n");
             uart_send_cmd_temp_report();
             return;
@@ -246,7 +246,7 @@ bool_t uart_send_string(uint8_t *pstring) {
     if (i == 0U) {
         return false;
     }
-    if (HAL_UART_Transmit(uart_huart, pstring, i, UART_TIMEOUT_MS) != HAL_OK) {
+    if (!driver_uart_transmit(uart_huart, pstring, i, UART_TIMEOUT_MS)) {
         uart_error_count++;
         return false;
     }
@@ -260,8 +260,7 @@ bool_t uart_send_string_size(uint8_t *pstring, uint16_t size) {
     if (size < UART_SIZE_MIN || size > UART_SIZE_MAX) {
         return false;
     }
-    if (HAL_UART_Transmit(uart_huart, pstring, size, UART_TIMEOUT_MS)
-        != HAL_OK) {
+    if (!driver_uart_transmit(uart_huart, pstring, size, UART_TIMEOUT_MS)) {
         uart_error_count++;
         return false;
     }
@@ -275,8 +274,7 @@ bool_t uart_receive_string_size(uint8_t *pstring, uint16_t size) {
     if (size < UART_SIZE_MIN || size > UART_SIZE_MAX) {
         return false;
     }
-    if (HAL_UART_Receive(uart_huart, pstring, size, UART_TIMEOUT_MS)
-        != HAL_OK) {
+    if (!driver_uart_receive(uart_huart, pstring, size, UART_TIMEOUT_MS)) {
         uart_error_count++;
         return false;
     }
@@ -288,14 +286,14 @@ bool_t uart_receive_byte_try(uint8_t *pstring) {
         return false;
     }
 
-    return (HAL_UART_Receive(uart_huart, pstring, UART_SIZE_MIN, 0U) == HAL_OK) ? true : false;
+    return driver_uart_receive_try(uart_huart, pstring, UART_SIZE_MIN);
 }
 
 uint32_t uart_get_error_count() {
     return uart_error_count;
 }
 
-bool_t uart_init(UART_HandleTypeDef *huart) {
+bool_t uart_init(void *huart) {
     uart_huart = huart;
     uart_error_count = 0U;
 
@@ -303,15 +301,7 @@ bool_t uart_init(UART_HandleTypeDef *huart) {
         return false;
     }
 
-    uart_huart->Instance = USART2;
-    uart_huart->Init.BaudRate = 115200;
-    uart_huart->Init.WordLength = UART_WORDLENGTH_8B;
-    uart_huart->Init.StopBits = UART_STOPBITS_1;
-    uart_huart->Init.Parity = UART_PARITY_NONE;
-    uart_huart->Init.Mode = UART_MODE_TX_RX;
-    uart_huart->Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    uart_huart->Init.OverSampling = UART_OVERSAMPLING_16;
-    if (HAL_UART_Init(uart_huart) != HAL_OK) {
+    if (!driver_uart_init(uart_huart)) {
         return false;
     }
 
@@ -336,7 +326,7 @@ bool_t uart_init(UART_HandleTypeDef *huart) {
 }
 
 void uart_cli_poll() {
-    uint32_t now_ms = HAL_GetTick();
+    uint32_t now_ms = driver_get_tick_ms();
     if (cli_report_enabled && now_ms - cli_last_report_ms >= CLI_REPORT_PERIOD_MS) {
         // Print current temperature report
         cli_last_report_ms = now_ms;

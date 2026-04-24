@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "api_uart.h"
 #include "api_thermal.h"
+#include "driver.h"
 
 /* USER CODE END Includes */
 
@@ -54,8 +55,6 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 
 static void MX_GPIO_Init(void);
-
-static void MX_USART2_UART_Init(void);
 
 static void MX_I2C1_Init(void);
 
@@ -95,7 +94,6 @@ int main(void) {
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
-    MX_USART2_UART_Init();
     MX_I2C1_Init();
     /* USER CODE BEGIN 2 */
     thermal_fsm_init(&hi2c1);
@@ -108,7 +106,7 @@ int main(void) {
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-        thermal_fsm_update(HAL_GetTick());
+        thermal_fsm_update(driver_get_tick_ms());
         uart_cli_poll();
     }
     /* USER CODE END 3 */
@@ -183,39 +181,10 @@ static void MX_I2C1_Init(void) {
 }
 
 /**
- * @brief USART2 Initialization Function
- * @param None
- * @retval None
- */
-static void MX_USART2_UART_Init(void) {
-    /* USER CODE BEGIN USART2_Init 0 */
-
-    /* USER CODE END USART2_Init 0 */
-
-    /* USER CODE BEGIN USART2_Init 1 */
-
-    /* USER CODE END USART2_Init 1 */
-    huart2.Instance = USART2;
-    huart2.Init.BaudRate = 115200;
-    huart2.Init.WordLength = UART_WORDLENGTH_8B;
-    huart2.Init.StopBits = UART_STOPBITS_1;
-    huart2.Init.Parity = UART_PARITY_NONE;
-    huart2.Init.Mode = UART_MODE_TX_RX;
-    huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-    if (HAL_UART_Init(&huart2) != HAL_OK) {
-        Error_Handler();
-    }
-    /* USER CODE BEGIN USART2_Init 2 */
-
-    /* USER CODE END USART2_Init 2 */
-}
-
-/**
- * @brief GPIO Initialization Function
- * @param None
- * @retval None
- */
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_GPIO_Init(void) {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     /* USER CODE BEGIN MX_GPIO_Init_1 */

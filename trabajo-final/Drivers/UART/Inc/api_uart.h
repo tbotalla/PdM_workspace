@@ -2,16 +2,15 @@
 #define API_UART_H_
 
 #include <stdint.h>
-#include "stm32f4xx_hal.h"
 #include "types.h"
 
 /**
  * @brief Initialize UART peripheral, CLI buffer and print welcome banner
- * @param huart pointer to UART handle used by this module
+ * @param huart opaque pointer to the HAL UART handle (e.g. &huart2 from main)
  * @retval true initialization successful
  * @retval false NULL handle or HAL error
  */
-bool_t uart_init(UART_HandleTypeDef * huart);
+bool_t uart_init(void * huart);
 
 /**
  * @brief Transmit a null-terminated string over UART

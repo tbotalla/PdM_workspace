@@ -1,16 +1,15 @@
 #ifndef API_BME280_H
 #define API_BME280_H
 
-#include "stm32f4xx_hal.h"
 #include "types.h"
 
 /**
  * @brief Initialize BME280 over I2C and load temperature calibration data.
- * @param hi2c pointer to I2C handle used by this module
+ * @param hi2c opaque pointer to the HAL I2C handle (e.g. &hi2c1 from main)
  * @retval true initialization successful
  * @retval false communication/configuration error
  */
-bool_t bme280_init(I2C_HandleTypeDef * hi2c);
+bool_t bme280_init(void *hi2c);
 
 /**
  * @brief Read compensated temperature in Celsius.
