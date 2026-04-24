@@ -1,7 +1,6 @@
 #ifndef API_THERMAL_H
 #define API_THERMAL_H
 
-#include "stm32f4xx_hal.h"
 #include "types.h"
 
 typedef enum {
@@ -14,13 +13,13 @@ typedef enum {
 
 /**
  * @brief Reset parameters, init buzzer and I2C handle. FSM stays in thermal_state_init until the first thermal_fsm_update.
- * @param hi2c pointer to I2C handle for sensor communication
+ * @param hi2c opaque pointer to the HAL I2C handle (e.g. &hi2c1 from main)
  */
-void thermal_fsm_init(I2C_HandleTypeDef * hi2c);
+void thermal_fsm_init(void *hi2c);
 
 /**
  * @brief Run one cycle of the thermal FSM (call this one periodically from main loop).
- * @param now_ms time in milliseconds (in this case HAL_GetTick() from the caller).
+ * @param now_ms time in milliseconds (e.g. driver_get_tick_ms() from the caller).
  */
 void thermal_fsm_update(uint32_t now_ms);
 

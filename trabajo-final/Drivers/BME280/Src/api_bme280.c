@@ -1,6 +1,6 @@
 #include "api_bme280.h"
 
-#include "stm32f4xx_hal.h"
+#include "driver.h"
 
 #include <stddef.h>
 
@@ -21,32 +21,30 @@
 static uint16_t bme280_dig_t1 = 0U;
 static int16_t bme280_dig_t2 = 0;
 static int16_t bme280_dig_t3 = 0;
-static I2C_HandleTypeDef *bme280_i2c = NULL;
+static void *bme280_i2c = NULL;
 
-static HAL_StatusTypeDef bme280_read(uint8_t reg, uint8_t *data, uint16_t len) {
+static bool_t bme280_read(uint8_t reg, uint8_t *data, uint16_t len) {
     if (bme280_i2c == NULL) {
-        return HAL_ERROR;
+        return false;
     }
-    return HAL_I2C_Mem_Read(bme280_i2c, BME280_ADDR, reg, I2C_MEMADD_SIZE_8BIT,
-                            data, len, BME280_I2C_TIMEOUT_MS);
+    return driver_i2c_mem_read(bme280_i2c, BME280_ADDR, reg, data, len, BME280_I2C_TIMEOUT_MS);
 }
 
-static HAL_StatusTypeDef bme280_write(uint8_t reg, uint8_t value) {
+static bool_t bme280_write(uint8_t reg, uint8_t value) {
     if (bme280_i2c == NULL) {
-        return HAL_ERROR;
+        return false;
     }
-    return HAL_I2C_Mem_Write(bme280_i2c, BME280_ADDR, reg, I2C_MEMADD_SIZE_8BIT,
-                             &value, 1U, BME280_I2C_TIMEOUT_MS);
+    return driver_i2c_mem_write8(bme280_i2c, BME280_ADDR, reg, value, BME280_I2C_TIMEOUT_MS);
 }
 
-bool_t bme280_init(I2C_HandleTypeDef *hi2c) {
+bool_t bme280_init(void *hi2c) {
     bme280_i2c = hi2c;
     if (bme280_i2c == NULL) {
         return false;
     }
 
     uint8_t chip_id = 0U;
-    if (bme280_read(BME280_REG_CHIP_ID, &chip_id, 1U) != HAL_OK) {
+    if (!bme280_read(BME280_REG_CHIP_ID, &chip_id, 1U)) {
         return false;
     }
     if (chip_id != BME280_CHIP_ID) {
@@ -54,13 +52,13 @@ bool_t bme280_init(I2C_HandleTypeDef *hi2c) {
     }
 
     // osrs_t=x1, osrs_p=skip, mode=normal
-    if (bme280_write(BME280_REG_CTRL_MEAS, BME280_CTRL_MEAS_TEMP_X1_NORMAL) != HAL_OK) {
+    if (!bme280_write(BME280_REG_CTRL_MEAS, BME280_CTRL_MEAS_TEMP_X1_NORMAL)) {
         return false;
     }
 
     uint8_t calib[6];
     // Read 6 bytes from dig_T1, so we get dig_T2 and dig_T3 as well
-    if (bme280_read(BME280_REG_DIG_T1, calib, sizeof(calib)) != HAL_OK) {
+    if (!bme280_read(BME280_REG_DIG_T1, calib, sizeof(calib))) {
         return false;
     }
     // Split the 2 bytes for each one
@@ -79,7 +77,7 @@ bool_t bme280_read_temperature(float_t *temp_c) {
     uint8_t raw[3];
     // Reads 3 bytes: 0xFA (temp_msb, [3:0]), 0xFB (temp_lsb, [11:4]), 0xFC (temp_xlsb, [19:12])
     // The sensor uses only 20 of those bits
-    if (bme280_read(BME280_REG_TEMP_MSB, raw, sizeof(raw)) != HAL_OK) {
+    if (!bme280_read(BME280_REG_TEMP_MSB, raw, sizeof(raw))) {
         return false;
     }
 

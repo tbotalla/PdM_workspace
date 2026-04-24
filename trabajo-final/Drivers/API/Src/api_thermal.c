@@ -11,7 +11,7 @@ static uint32_t max_alarm_ms = 10000U;
 static uint32_t last_sample_ms = 0U;
 static uint32_t alarm_start_ms = 0U;
 static uint32_t last_recovery_try_ms = 0U;
-static I2C_HandleTypeDef *thermal_i2c = NULL;
+static void *thermal_i2c = NULL;
 
 #define THERMAL_SAMPLE_PERIOD_MS 500U // How often to sample the temperature
 #define THERMAL_RECOVERY_PERIOD_MS 1000U // ms to wait for recovery after sensor error
@@ -45,7 +45,7 @@ static uint32_t bound_u32(uint32_t value, uint32_t min_value,
     return value;
 }
 
-void thermal_fsm_init(I2C_HandleTypeDef *hi2c) {
+void thermal_fsm_init(void *hi2c) {
     if (hi2c == NULL) {
         return;
     }
@@ -154,7 +154,7 @@ void thermal_fsm_set_threshold(float_t threshold_value_c) {
     threshold_c = bound_float(threshold_value_c, THRESHOLD_MIN_C, THRESHOLD_MAX_C);
 }
 
-float_t thermal_fsm_get_threshold(void) {
+float_t thermal_fsm_get_threshold() {
     return threshold_c;
 }
 
@@ -163,7 +163,7 @@ void thermal_fsm_set_hysteresis(float_t hysteresis_value_c) {
                                HYSTERESIS_MAX_C);
 }
 
-float_t thermal_fsm_get_hysteresis(void) {
+float_t thermal_fsm_get_hysteresis() {
     return hysteresis_c;
 }
 
@@ -172,15 +172,15 @@ void thermal_fsm_set_max_alarm_ms(uint32_t max_alarm_value_ms) {
                              MAX_ALARM_MAX_MS);
 }
 
-uint32_t thermal_fsm_get_max_alarm_ms(void) {
+uint32_t thermal_fsm_get_max_alarm_ms() {
     return max_alarm_ms;
 }
 
-float_t thermal_fsm_get_last_temp(void) {
+float_t thermal_fsm_get_last_temp() {
     return last_temp_c;
 }
 
-thermal_state_t thermal_fsm_get_state(void) {
+thermal_state_t thermal_fsm_get_state() {
     return thermal_state;
 }
 
